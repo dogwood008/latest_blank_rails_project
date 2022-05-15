@@ -3,3 +3,14 @@ services:
     build: .
     volumes:
       - ./app:/app:delegated
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.2
+    environment:
+      - POSTGRES_USER=pg
+      - POSTGRES_PASSWORD=pg
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ./postgres:/var/lib/postgresql/data:delegated
