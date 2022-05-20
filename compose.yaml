@@ -1,6 +1,17 @@
 services:
   app:
     build: .
+    command:
+      - bundle
+      - exec
+      - rails
+      - server
+      - -b
+      - 0.0.0.0
+      - -p
+      - $PORT
+    ports:
+      - $PORT:3000
     volumes:
       - ./app:/app:delegated
     depends_on:
