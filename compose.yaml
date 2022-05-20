@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    command:
+      - bundle
+      - exec
+      - rails
+      - server
+      - -b
+      - 0.0.0.0
+      - -p
+      - $PORT
+    ports:
+      - $PORT:3000
+    volumes:
+      - ./app:/app:delegated
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.2
+    environment:
+      - POSTGRES_USER=pg
+      - POSTGRES_PASSWORD=pg
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ./postgres:/var/lib/postgresql/data:delegated
