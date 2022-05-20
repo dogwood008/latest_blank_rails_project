@@ -6,12 +6,10 @@ services:
       - exec
       - rails
       - server
-      - -b
-      - 0.0.0.0
-      - -p
-      - $PORT
+      - --binding=0.0.0.0
+      - --port=3000
     ports:
-      - $PORT:3000
+      - ${PORT:-3000}:3000
     volumes:
       - ./app:/app:delegated
     depends_on:
