@@ -15,11 +15,10 @@ ARG BUNDLER_VERSION=2.3.13
 # gemのキャッシュを識別するID
 ARG CACHE_ID=debian_${DEBIAN_CODENAME?}_ruby${RUBY_VERSION?}
 
-ENV DEBIAN_CODENAME ${DEBIAN_CODENAME?}
 # gemのインストール先兼キャッシュマウント位置
 ARG CACHE_MOUNT_PATH=/opt/${DEBIAN_CODENAME?}/ruby${RUBY_VERSION?}/.cache/bundle
 # キャッシュアンマウント後に使用するgemのインストール先
-ARG NEW_BUNDLE_PATH=/root/bundle
+ARG BUNDLE_PATH_FOR_RUN=/root/bundle
 
 # 一時ディレクトリでGemfileを使用してgemをインストールする
 ARG WORKDIR=/tmp
