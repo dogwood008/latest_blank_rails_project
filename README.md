@@ -13,6 +13,7 @@ bundle exec rails new latest_blank_rails_project \
 ## SETUP
 
 ```
+echo 'db96175e496781b9fb7ebd6701ada024' > app/config/master.key
 docker compose run --rm app bin/rails db:create
 ```
 
