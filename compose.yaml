@@ -1,17 +1,23 @@
+# https://docs.docker.com/compose/compose-file/compose-file-v3/#extension-fields
+x-db-settings: &DB_SETTINGS
+  POSTGRES_USER: pg
+  POSTGRES_PASSWORD: pg
+
 services:
   app:
     build: .
+    environment:
+      << : *DB_SETTINGS
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
     command:
       - bundle
       - exec
       - rails
       - server
-      - -b
-      - 0.0.0.0
-      - -p
-      - $PORT
+      - --binding=0.0.0.0
+      - --port=3000  # ここのポート番号は、コンテナ内の待ち受けポート
     ports:
-      - $PORT:3000
+      - ${PORT:-3000}:3000  # ここのコンテナ側ポート番号と上記のポート番号は同じである必要がある
     volumes:
       - ./app:/app:delegated
     depends_on:
@@ -20,8 +26,7 @@ services:
   db:
     image: postgres:14.2
     environment:
-      - POSTGRES_USER=pg
-      - POSTGRES_PASSWORD=pg
-      - PGDATA=/var/lib/postgresql/data
+      << : *DB_SETTINGS
+      PGDATA: /var/lib/postgresql/data
     volumes:
       - ./postgres:/var/lib/postgresql/data:delegated
